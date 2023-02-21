@@ -1,0 +1,147 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-sm-offset-2">
+      <form #basicForm="ngForm" (ngSubmit)="getData(basicForm.value)">
+        <div class="form-group">
+          <label for="Firstname">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fname"
+            placeholder="Enter First name"
+            [(ngModel)]="user.fname"
+            name="first"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="Secondname">middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mname"
+            placeholder="Enter middle name"
+            name="middle"
+            required
+            [(ngModel)]="user.mname"
+          />
+        </div>
+        <div class="form-group">
+          <label for="LastName">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lname"
+            placeholder="Enter Last name"
+            name="last"
+            required
+            [(ngModel)]="user.lname"
+          />
+        </div>
+
+        <div class="form-group">
+          <textarea
+            name="fullname"
+            id="fullname"
+            cols="30"
+            rows="5"
+            class="form-control"
+            [(ngModel)]="user.fname + user.mname + user.lname"
+          >
+
+                    {{ user.fname }} {{ user.mname }} {{ user.lname }}
+                  </textarea
+          >
+        </div>
+
+        <div class="form-group">
+          <br />
+          <label for="age">age:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            placeholder="Enter age"
+            name="age"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <br />
+          <label for="gender">Gender:</label>
+          <div *ngFor="let Gender of genders">
+            <input type="radio" name="gender" [value]="Gender" ngModel />
+            {{ Gender }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <br />
+          <h6>Hobbies</h6>
+          <input
+            type="checkbox"
+            id="vehicle1"
+            name="bike"
+            value="Bike"
+            [(ngModel)]="hobby.bike"
+          />
+          <label for="vehicle1"> I have a bike</label><br />
+          <input
+            type="checkbox"
+            id="vehicle2"
+            name="car"
+            value="car"
+            [(ngModel)]="hobby.car"
+          />
+          <label for="vehicle2"> I have a car</label><br />
+          <input
+            type="checkbox"
+            id="music"
+            name="song"
+            value="music"
+            [(ngModel)]="hobby.music"
+          />
+          <label for="music"> I like music</label><br />
+
+          <input
+            type="checkbox"
+            id="dance"
+            name="dancing"
+            value="dance"
+            [(ngModel)]="hobby.dance"
+          />
+          <label for="dance"> I like dance</label><br />
+
+          <input
+            type="checkbox"
+            id="travelling"
+            name="travel"
+            value="travelling"
+            [(ngModel)]="hobby.travel"
+          />
+          <label for="travelling"> I like travelling</label><br />
+        </div>
+
+
+
+        <div class="form-group">
+          <br>
+         <h6> <label for="company">company</label></h6>
+          <select class="form-control" id="companies" [ngModel]="defaultSelect" name="menu">
+            <option value ='tcs'>Tcs</option>
+            <option value="Tech Extensor" selected>Tech Extensor</option>
+            <option value= "wipro">wipro</option>
+            <option value= "Infosys">Infosys</option>
+            <option value= "Knackroot">Knackroot</option>
+            <option value= "Mahindra">Mahindra</option>
+            <option value= "Suzuki">Suzuki</option>
+            <option value= "Adani">Adani</option>
+        
+          
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary m-2">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

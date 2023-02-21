@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-sm-offset-2">
+            <form #basicForm= "ngForm" (ngSubmit)="getData(+number.value)">
+            <div class="form-group">
+                <label for="number">Enter Number ::</label>
+                <input type="number" class="form-control" required ngModel name="number"  #number>
+                <button class="btn btn-primary m-2" type="submit" >submit</button>
+            </div>
+            </form>
+       
+    </div>
+</div>
+      
