@@ -31,6 +31,7 @@ export class ReactiveComponent implements OnInit {
     this.route.queryParams.subscribe((qp)=>{
         this.userId = qp['id'];
     });
+    
 
 
 
@@ -42,17 +43,17 @@ export class ReactiveComponent implements OnInit {
     private userService: UserService
   ) {
     this.projectForm = new FormGroup({
-      firstname: new FormControl('', { validators: [Validators.required] }),
-      middlename: new FormControl('', { validators: [Validators.required] }),
-      lastname: new FormControl('', { validators: [Validators.required] }),
-      age: new FormControl('', { validators: [Validators.required] }),
-      gender: new FormControl('', { validators: [Validators.required] }),
-      hobbies: new FormGroup({
-        music: new FormControl(false),
-        dancing: new FormControl(false),
-        movie: new FormControl(false),
-        reading: new FormControl(false),
-        travelling: new FormControl(false),
+      'firstname': new FormControl('', { validators: [Validators.required] }),
+      'middlename': new FormControl('', { validators: [Validators.required] }),
+      'lastname': new FormControl('', { validators: [Validators.required] }),
+      'age': new FormControl('', { validators: [Validators.required] }),
+      'gender': new FormControl('', { validators: [Validators.required] }),
+      'hobbies': new FormGroup({
+        'music': new FormControl(false),
+        'dancing': new FormControl(false),
+        'movie': new FormControl(false),
+        'reading': new FormControl(false),
+        'travelling': new FormControl(false),
       }),
       'company': new FormControl('',{validators: [Validators.required,]})
     });
@@ -66,6 +67,7 @@ export class ReactiveComponent implements OnInit {
 
   getData(){
     if (this.userService.isUserExist(this.userId!)){
+     
       this.user = this.userService.getUser(this.userId!)!;
       this.projectForm.setValue({
         firstname: this.user.firstname,
@@ -74,14 +76,13 @@ export class ReactiveComponent implements OnInit {
         age: this.user.age,
         gender: this.user.gender,
         hobbies: {
-          'music': this.user.hobbies['music'],
-          'dancing': this.user.hobbies['dancing'],
-          'movie': this.user.hobbies['movie'],
-          'reading': this.user.hobbies['reading'],
-          'travelling': this.user.hobbies['travelling']
+          'music': this.user.hobbies['music'] ?? false,
+          'dancing': this.user.hobbies['dancing'] ?? false,
+          'movie': this.user.hobbies['movie'] ?? false,
+          'reading': this.user.hobbies['reading'] ?? false,
+          'travelling': this.user.hobbies['travelling'] ?? false
         },
-    
-        'company': this.user.company
+        company: this.user.company
       });
     }
   }
