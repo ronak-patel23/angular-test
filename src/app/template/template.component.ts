@@ -1,48 +1,72 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
+import { Hobbies } from '../model/user.model';
+import { UserService } from '../user.service';
+import { UserModel } from '../model/user.model';
 
 @Component({
   selector: 'app-template',
   templateUrl: './template.component.html',
-  styleUrls: ['./template.component.css']
+  styleUrls: ['./template.component.css'],
 })
-export class TemplateComponent {
+export class TemplateComponent implements OnInit {
+  @ViewChild('basicForm')
+  basicForm: NgForm | undefined;
+  hobbieList = Hobbies;
+  userId: string | undefined;
 
-  // userId : number;
-constructor(private router:Router, private route:ActivatedRoute){
-  // this.userId = this.route.snapshot.queryParams['id'];
-//  this.user = JSON.parse(localStorage.getItem('data')??"{}")
+  user: UserModel = {
+    id: '',
+    firstname: '',
+    lastname: '',
+    middlename: '',
+    age: 0,
+    gender: '',
+    hobbies: {},
+    company: '',
+  };
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
 
+  ngOnInit(): void {
+    this.userId = this.route.snapshot.queryParams['id'];
 
-  
+    if (this.userService.isUserExist(this.userId!)) {
+      this.user = this.userService.getUser(this.userId!)!;
+    }
+    this.route.queryParams.subscribe((qp) => {
+      this.userId = qp['id'];
+      console.log(this.userId);
+      if (this.userService.isUserExist(qp['id'])) {
+        this.user = this.userService.getUser(qp['id'])!;
+      }
+    });
+  }
+
+  saveData() {
+    this.user.id = this.userId!;
+    this.userService.saveUser(this.user);
+    this.router.navigate(['/reactive'], { queryParamsHandling: 'preserve' });
+  }
+
+  clearForm() {
+    this.user = {
+      id: '',
+      firstname: '',
+      lastname: '',
+      middlename: '',
+      age: 0,
+      gender: '',
+      hobbies: {},
+      company: '',
+    };
+  }
+
+  back() {
+    this.router.navigate(['../']);
+  }
 }
-
-
-  defaultSelect='Tech Extensor';
-
-
-  user = {
-    fname:'',
-    mname:'',
-    lname: '',
-   
-  }
-  hobby={
-    bike:'',
-    car:'',
-    music:'',
-    dance:'',
-    travel :''
-  }
-  genders = ['male','female']
-  getData(data:NgForm){
-    localStorage.setItem('data',JSON.stringify(data));
-    
-  }
-
-
-}
- 

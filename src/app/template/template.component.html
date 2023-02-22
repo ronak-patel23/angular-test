@@ -1,7 +1,9 @@
 <div class="container">
+  <h1 style="color: brown;">Template Driven Form !!!!</h1>
   <div class="row">
+    
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-sm-offset-2">
-      <form #basicForm="ngForm" (ngSubmit)="getData(basicForm.value)">
+      <form #basicForm="ngForm" (ngSubmit)="saveData()">
         <div class="form-group">
           <label for="Firstname">First Name</label>
           <input
@@ -9,7 +11,7 @@
             class="form-control"
             id="fname"
             placeholder="Enter First name"
-            [(ngModel)]="user.fname"
+            [(ngModel)]="user.firstname"
             name="first"
             required
           />
@@ -23,7 +25,7 @@
             placeholder="Enter middle name"
             name="middle"
             required
-            [(ngModel)]="user.mname"
+            [(ngModel)]="user.middlename"
           />
         </div>
         <div class="form-group">
@@ -35,23 +37,24 @@
             placeholder="Enter Last name"
             name="last"
             required
-            [(ngModel)]="user.lname"
+            [(ngModel)]="user.lastname"
           />
         </div>
 
         <div class="form-group">
-          <textarea
+          <label for="fullname">Fullname:</label>
+          <input
+            type="text"
             name="fullname"
             id="fullname"
             cols="30"
-            rows="5"
+            rows="3"
+            disabled
             class="form-control"
-            [(ngModel)]="user.fname + user.mname + user.lname"
-          >
+            [ngModel]="user.firstname + ' ' + user.middlename + ' ' + user.lastname"
+          />
 
-                    {{ user.fname }} {{ user.mname }} {{ user.lname }}
-                  </textarea
-          >
+          
         </div>
 
         <div class="form-group">
@@ -64,83 +67,88 @@
             placeholder="Enter age"
             name="age"
             required
+            [(ngModel)]="user.age"
           />
         </div>
         <div class="form-group">
           <br />
           <label for="gender">Gender:</label>
-          <div *ngFor="let Gender of genders">
-            <input type="radio" name="gender" [value]="Gender" ngModel />
-            {{ Gender }}
-          </div>
+          <input
+            type="radio"
+            class="form-radio-input"
+            value="male"
+            id="male"
+            name="gender"
+            [(ngModel)]="user.gender"
+            required
+            checked
+          />
+          <label for="male" class="form-radio-label me-2">Male</label>
+          <input
+            type="radio"
+            class="form-radio-input"
+            value="female"
+            id="female"
+            name="gender"
+            [(ngModel)]="user.gender"
+            required
+          />
+          <label for="female" class="form-radio-label">Female</label>
         </div>
 
-        <div class="form-group">
-          <br />
-          <h6>Hobbies</h6>
-          <input
-            type="checkbox"
-            id="vehicle1"
-            name="bike"
-            value="Bike"
-            [(ngModel)]="hobby.bike"
-          />
-          <label for="vehicle1"> I have a bike</label><br />
-          <input
-            type="checkbox"
-            id="vehicle2"
-            name="car"
-            value="car"
-            [(ngModel)]="hobby.car"
-          />
-          <label for="vehicle2"> I have a car</label><br />
-          <input
-            type="checkbox"
-            id="music"
-            name="song"
-            value="music"
-            [(ngModel)]="hobby.music"
-          />
-          <label for="music"> I like music</label><br />
-
-          <input
-            type="checkbox"
-            id="dance"
-            name="dancing"
-            value="dance"
-            [(ngModel)]="hobby.dance"
-          />
-          <label for="dance"> I like dance</label><br />
-
-          <input
-            type="checkbox"
-            id="travelling"
-            name="travel"
-            value="travelling"
-            [(ngModel)]="hobby.travel"
-          />
-          <label for="travelling"> I like travelling</label><br />
-        </div>
-
-
-
-        <div class="form-group">
-          <br>
-         <h6> <label for="company">company</label></h6>
-          <select class="form-control" id="companies" [ngModel]="defaultSelect" name="menu">
-            <option value ='tcs'>Tcs</option>
-            <option value="Tech Extensor" selected>Tech Extensor</option>
-            <option value= "wipro">wipro</option>
-            <option value= "Infosys">Infosys</option>
-            <option value= "Knackroot">Knackroot</option>
-            <option value= "Mahindra">Mahindra</option>
-            <option value= "Suzuki">Suzuki</option>
-            <option value= "Adani">Adani</option>
+        <div class="form-group" ngModelGroup="hobbies" #hobbies="ngModelGroup">
         
-          
-          </select>
+            <div *ngFor="let hobby of hobbieList ; let i = index">
+              <input type="checkbox" name="hobby" id="hobbie" [value]="hobby" [name]="hobby" [(ngModel)]=" user.hobbies[hobby]" />
+              {{ hobby }}
+            </div>
+           
+
+          <div class="form-group">
+            <br />
+            <h6><label for="company">company</label></h6>
+            <select
+              class="form-control"
+              id="company"
+              name="company"
+              [(ngModel)]="user.company"
+              required
+            >
+              <option value="tcs">Tcs</option>
+              <option value="Tech Extensor" selected>Tech Extensor</option>
+              <option value="wipro">wipro</option>
+              <option value="Infosys">Infosys</option>
+              <option value="google">google</option>
+              <option value="microfost">microsoft</option>
+              <option value="Suzuki">Suzuki</option>
+              <option value="Adani">Adani</option>
+            </select>
+          </div>
+          <input
+            type="button"
+            value="Back"
+            name="back"
+            id="back"
+            (click)="back()"
+            class="btn btn-primary mt-3 me-3"
+          />
+          <input
+            type="button"
+            value="Clear"
+            name="clear"
+            id="claer"
+            (click)="clearForm()"
+            class="btn btn-dark mt-3 me-3"
+          />
+          <input
+            type="submit"
+            value="Save"
+            name="save"
+            id="save"
+            [disabled]="!basicForm.form.valid"
+            class="btn btn-success mt-3 me-3"
+          />
         </div>
-        <button type="submit" class="btn btn-primary m-2">Submit</button>
       </form>
     </div>
   </div>

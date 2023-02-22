@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +10,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router:Router) {}
-  getData(data: number) {
+  @ViewChild('basicForm')
+  newForm : NgForm | undefined;
+  error:string|undefined;
+  timer:number = 3;
 
-    this.router.navigate(['/template'],{queryParams:{id:data}});
+  constructor(private router:Router,private userService:UserService) {
+
+    this.timer =3;
+
+  }
+  
+  
+  
+  onSubmit(){
+ 
+    const id = this.newForm?.form.get('number')?.value;
+    // if(this.userService.isUserExist(id)){
+       this.router.navigate(['template'],{queryParams:{id:id}})
+      //  return;
+    // }
+      // this.error =" user doesn't exist!"
   }
   ngOnInit(): void {
 

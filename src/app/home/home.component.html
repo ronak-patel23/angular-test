@@ -1,12 +1,15 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-sm-offset-2">
-            <form #basicForm= "ngForm" (ngSubmit)="getData(+number.value)">
+            <form #basicForm= "ngForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="number">Enter Number ::</label>
+                <label for="number">User id :</label>
                 <input type="number" class="form-control" required ngModel name="number"  #number>
-                <button class="btn btn-primary m-2" type="submit" >submit</button>
+                <span *ngIf="!basicForm.form.get('number')?.valid && basicForm.form.get('number')?.touched" class="help-block text-danger">please Enter a valid id !</span>
+                <span *ngIf="error" class="help-block text-danger">{{error}}</span>
+                
             </div>
+            <button class="btn btn-primary m-2" type="submit" >submit</button>
             </form>
        
     </div>
